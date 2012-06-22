@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="LifeBoard.js"></script>
+        <script src="LifeLogic.js"></script>
+    <head>
+    <body>
+        <canvas id='the_canvas' width="1000" height="1000" style="border: 1px solid black; display: inline;"></canvas>
+        <a style="vertical-align: top" onclick="start(); return false;">Start</a>
+        <a style="vertical-align: top" onclick="pause(); return false;">Stop</a>
+        <script>
+
+            var canvas = document.getElementById('the_canvas');
+            var board = new LifeBoard(canvas);
+            
+            var go = false;
+            setInterval(function(){
+                if (go){
+                    board.advance();
+                    board.render();
+                }
+            }, 10);
+            function start(){go=true;}
+            function pause(){go=false;}
+        </script>
+    </body>
+</html>
