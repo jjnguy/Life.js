@@ -4,15 +4,15 @@
         <script src="LifeBoard.js"></script>
         <script src="LifeLogic.js"></script>
     <head>
-    <body>
-        <canvas id='the_canvas' width="1000" height="1000" style="border: 1px solid black; display: inline;"></canvas>
+    <body style="margin: 0px;">
+        <canvas id='the_canvas' width="1000" height="1000" style="border: 1px solid black; display: inline; margin: 0px;"></canvas>
         <a style="vertical-align: top" onclick="start(); return false;">Start</a>
         <a style="vertical-align: top" onclick="pause(); return false;">Stop</a>
         <script>
 
             var canvas = document.getElementById('the_canvas');
             var board = new LifeBoard(canvas);
-            
+            board.render();
             var go = false;
             setInterval(function(){
                 if (go){
