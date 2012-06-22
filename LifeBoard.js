@@ -11,6 +11,7 @@ function LifeBoard(canvas, startingLogic) {
     var _square_width = 10;
     
     var _liveCellColor = "Black";
+    var _liveCellHoverColor = "#888";
     var _mouseColor = "#00A308";
     
     // Canvas Events
@@ -20,17 +21,20 @@ function LifeBoard(canvas, startingLogic) {
     });
     
     var lastPoint = {};
+    var lastPointWasAlive = false;
     _$canvas.mousemove(function(e){
         _self.render();
         var point = {x:e.pageX,y:e.pageY};
         convertCoord(point);
-        _ctx.fillStyle = "#ffffff";
+        _ctx.fillStyle = lastPointWasAlive ? _liveCellColor : "#ffffff";
         _ctx.fillRect(lastPoint.x * _square_width, lastPoint.y * _square_width, _square_width, _square_width);
         lastPoint = point;
         if (!_state.isAlive(point)){
             _ctx.fillStyle = _mouseColor;
-            _ctx.fillRect(point.x * _square_width, point.y * _square_width, _square_width, _square_width);
+        } else {
+            _ctx.fillStyle = _liveCellHoverColor;
         }
+        _ctx.fillRect(point.x * _square_width, point.y * _square_width, _square_width, _square_width);
     });
     
     // End Canvas events
