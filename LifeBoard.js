@@ -6,6 +6,8 @@ function LifeBoard(canvas, startingLogic) {
     var _ctx = _canvas.getContext('2d');
     var _self = this;
     
+    var _viewportOrigin = { x: 0, y: 0 };
+    
     var _state = startingLogic || new LifeLogic();
     
     var _square_width = 10;
@@ -17,7 +19,9 @@ function LifeBoard(canvas, startingLogic) {
     // Canvas Events
     
     _$canvas.click(function(e){
-        _self.toggle({x:e.pageX, y:e.pageY});
+        var point = {x:e.pageX, y:e.pageY};
+        convertCoord(point);
+        _self.toggle(shiftPointForViewport(point));
     });
     
     var lastPoint = {};
@@ -36,11 +40,29 @@ function LifeBoard(canvas, startingLogic) {
         }
         _ctx.fillRect(point.x * _square_width, point.y * _square_width, _square_width, _square_width);
     });
-    
+    // drag stuff
+    var dragStart;
+    _$canvas.mousemove(function(e){
+        if (dragStart) {
+            var point = {x:e.pageX,y:e.pageY};
+            convertCoord(point);
+            var xDiff = point.x - dragStart.x;
+            var yDiff = point.y - dragStart.y;
+            _self.origin({x:_self.origin().x - xDiff, y:_self.origin().y - yDiff});
+            dragStart = point;
+        }
+    });
+    _$canvas.mousedown(function(e){
+        dragStart = {x:e.pageX,y:e.pageY};
+        convertCoord(dragStart);
+    });
+    _$canvas.mouseup(function(){
+        dragStart = undefined;
+    });
+    // end drag stuff
     // End Canvas events
     
     _self.toggle = function toggle(point) {
-        convertCoord(point);
         _state.toggle(point);
         _self.render();
     };
@@ -67,7 +89,7 @@ function LifeBoard(canvas, startingLogic) {
         var points = _state.getPoints();
         _ctx.fillStyle = _liveCellColor;
         for(var i = 0; i < points.length; i++){
-            var point = points[i];
+            var point = shiftPointForViewport(points[i]);
             _ctx.fillRect(point.x * _square_width, point.y * _square_width, _square_width, _square_width);
         }
     };
@@ -76,8 +98,35 @@ function LifeBoard(canvas, startingLogic) {
         return _state.advance();
     };
     
+    _self.squareWidth = function squareWidth(newWidth) {
+        if (newWidth) {
+            _square_width = parseInt(newWidth, 10);
+            _self.render();
+        }
+        return _square_width;
+    };
+    
+    _self.origin = function origin(newOrigin) {
+        if (newOrigin) {
+            _viewportOrigin = newOrigin;
+            _self.render();
+        }
+        return _viewportOrigin;
+    };
+    
+    _self.getPoints = function getPoints() {
+        return _state.getPoints();
+    };
+    
+    function shiftPointForViewport(point) {
+        return { x:point.x - _viewportOrigin.x, y: point.y - _viewportOrigin.y };
+    }
+    
     function convertCoord(point){
+        if (point.converted) return point;
         point.x = Math.floor(point.x / _square_width);
         point.y = Math.floor(point.y / _square_width);
+        point.converted = true;
+        return point;
     }
 }

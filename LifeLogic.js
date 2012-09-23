@@ -9,7 +9,44 @@ function contains(points, point) {
 }
 
 function LifeLogic() {
-    var _livePoints = [{x:1,y:1}, {x:2,y:2}, {x:2,y:3}, {x:1,y:3}, {x:0,y:3}];
+    var _livePoints = [
+   {x:4,y:4},
+   {x:4,y:5},
+   {x:5,y:5},
+   {x:5,y:4},
+   {x:14,y:4},
+   {x:14,y:5},
+   {x:14,y:6},
+   {x:15,y:3},
+   {x:16,y:2},
+   {x:17,y:2},
+   {x:15,y:7},
+   {x:16,y:8},
+   {x:17,y:8},
+   {x:18,y:5},
+   {x:19,y:3},
+   {x:19,y:7},
+   {x:20,y:6},
+   {x:20,y:5},
+   {x:20,y:4},
+   {x:21,y:5},
+   {x:24,y:4},
+   {x:25,y:4},
+   {x:25,y:3},
+   {x:24,y:3},
+   {x:24,y:2},
+   {x:25,y:2},
+   {x:26,y:5},
+   {x:26,y:1},
+   {x:28,y:1},
+   {x:28,y:0},
+   {x:28,y:5},
+   {x:28,y:6},
+   {x:38,y:2},
+   {x:39,y:2},
+   {x:38,y:1},
+   {x:39,y:1},
+];
     var _self = this;
     
     _self.getPoints = function getPoints(){
