@@ -1,6 +1,7 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="Point.js"></script>
         <script src="LifeBoard.js"></script>
         <script src="LifeLogic.js"></script>
     <head>
@@ -53,13 +54,13 @@
                 });
                 $('#get-points').click(function(){
                     var $pointDisplay = $('#point-display');
-                    var pointString = '[\n';
+                    var pointString = '{\n';
                     var points = board.getPoints();
-                    for(var i =0; i < points.length; i++) {
-                        var point = points[i];
-                        pointString += '   {x:' + point.x + ',y:' + point.y + '},\n';
+                    for(var key in points) {
+                        var point = points[key];
+                        pointString += '   "'+point.x + '-' + point.y+'":{x:' + point.x + ',y:' + point.y + '},\n';
                     }
-                    $pointDisplay.text(pointString + ']');
+                    $pointDisplay.text(pointString + '}');
                 });
             });
         </script>

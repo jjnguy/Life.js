@@ -88,8 +88,8 @@ function LifeBoard(canvas, startingLogic) {
         drawRule();
         var points = _state.getPoints();
         _ctx.fillStyle = _liveCellColor;
-        for(var i = 0; i < points.length; i++){
-            var point = shiftPointForViewport(points[i]);
+        for(var key in points){
+            var point = shiftPointForViewport(points[key]);
             _ctx.fillRect(point.x * _square_width, point.y * _square_width, _square_width, _square_width);
         }
     };
