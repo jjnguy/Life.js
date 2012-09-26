@@ -68,6 +68,7 @@ function LifeBoard(canvas, startingLogic) {
     };
     
     function drawRule(){
+        if (_square_width < 3) return;
         _ctx.lineWidth = 0.25;
         for(var i = 0; i < _canvas.width; i+=_square_width) {
             _ctx.beginPath();
