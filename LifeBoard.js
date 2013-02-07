@@ -21,7 +21,7 @@ function LifeBoard(canvas, startingLogic) {
     _$canvas.click(function(e){
         var point = {x:e.pageX, y:e.pageY};
         convertCoord(point);
-        _self.toggle(shiftPointForViewport(point));
+        _self.toggle(undoViewportShift(point));
     });
     
     var lastPoint = {};
@@ -121,6 +121,10 @@ function LifeBoard(canvas, startingLogic) {
     
     function shiftPointForViewport(point) {
         return { x:point.x - _viewportOrigin.x, y: point.y - _viewportOrigin.y };
+    }
+
+    function undoViewportShift(point) {
+        return { x:point.x + _viewportOrigin.x, y: point.y + _viewportOrigin.y };
     }
     
     function convertCoord(point){
