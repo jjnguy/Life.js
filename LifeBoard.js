@@ -13,7 +13,7 @@ function LifeBoard(canvas, startingLogic) {
     var _square_width = 10;
     
     var _liveCellColor = "Black";
-    var _liveCellHoverColor = "#888";
+    var _liveCellHoverColor = "#A30008";
     var _mouseColor = "#00A308";
     
     // Canvas Events
