@@ -16,16 +16,25 @@
       <label>
         Grid Size<input type="range" min="1" max="60" value="40" id="gridSize" name="gridSize" />
       </label>
-      <label style="display: none">
+      <label>
         Colors
-        <select>
-          <option>black</option>
-          <option>pride</option>
+        <select id="color-choose">
+          <option value="black">black</option>
+          <option value="pride">pride</option>
+          <option value="random">random</option>
         </select>
       </label>
     </div>
   </div>
   <script>
+    function getCororChooserFunc(colors) {
+      return function (point) {
+        //let colors = ;
+
+        return colors[(point.x + point.y) % colors.length]
+      };
+    }
+
     $(function () {
       var canvas = document.getElementById('the_canvas');
       var board = new LifeBoard(canvas);
@@ -44,7 +53,23 @@
       $('#gridSize').on("input", function () {
         board.squareWidth($(this).val());
       });
+      $('#color-choose').on('change', function () {
+        var color = $('#color-choose').val();
+        var func = () => 'white';
+        switch (color) {
+          case 'black': { func = (_) => 'black'; break; }
+          case 'pride': { func = getCororChooserFunc(['red', 'orange', 'yellow', 'green', 'blue', 'purple']); break; }
+          case 'random': { func = () => randomColor(); break; }
+        }
+        board.colorFunction(func);
+      })
     });
+
+    function randomColor() {
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      document.body.style.backgroundColor = "#" + randomColor;
+      return "#" + randomColor;
+    }
   </script>
   <style>
     html {
@@ -87,6 +112,7 @@
 
     #controls div.right {
       margin-left: auto;
+      display: flex;
     }
 
     #controls label {
