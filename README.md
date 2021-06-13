@@ -11,3 +11,7 @@ Yup, a bunch.
 *Then why are you doing it again?*
 
 Cuz I wanted to...
+
+[Check it out here][1]
+
+[1]: http://jjnguy.github.io/Life.js/
