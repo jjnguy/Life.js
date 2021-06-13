@@ -1,76 +1,72 @@
 <html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="LifeBoard.js"></script>
-        <script src="LifeLogic.js"></script>
-    <head>
-    <body style="margin: 0px;">
-        <canvas id='the_canvas' width="1000" height="1000" style="border: 1px solid black; display: inline; margin: 0px;float:left;"></canvas>
-        <div id="controls" style="float:left;">
-            <a id="startstop" style="vertical-align: top;">start</a>
-            <br />
-            Grid Size<input type="text" value="10" id="gridSize" name="gridSize"></input>
-            <br />
-            <button id="viewportUp">Up</button><br />
-            <button id="viewportLeft">Left</button><button id="viewportRight">Right</button><br />
-            <button id="viewportDown">Down</button>
-        </div>
-        <div>
-            <button id="get-points">Get Points</button>
-            <button id="set-points">Set Points</button>
-            <textarea id="point-display"></textarea>
-        </div>
-        <script>
-            $(function(){
-                var canvas = document.getElementById('the_canvas');
-                var board = new LifeBoard(canvas);
-                board.render();
-                var go = false;
-                setInterval(function(){
-                    if (go){
-                        board.advance();
-                        board.render();
-                    }
-                }, 10);
-                $('#startstop').click(function(){
-                    go = !go;
-                    $(this).text(go? "stop" : "start");
-                });
-                $('#gridSize').keyup(function(){
-                    board.squareWidth($(this).val());
-                });
-                $('#viewportUp').click(function (){
-                    board.origin({x:board.origin().x,y:board.origin().y+1});
-                });
-                $('#viewportDown').click(function (){
-                    board.origin({x:board.origin().x,y:board.origin().y-1});
-                });
-                $('#viewportLeft').click(function (){
-                    board.origin({x:board.origin().x+1,y:board.origin().y});
-                });
-                $('#viewportRight').click(function (){
-                    board.origin({x:board.origin().x-1,y:board.origin().y});
-                });
-                $('#get-points').click(function(){
-                    var $pointDisplay = $('#point-display');
-                    var pointString = '{\n';
-                    var points = board.getPoints();
-                    for(var key in points) {
-                        var point = points[key];
-                        pointString += '   "'+point.x + '-' + point.y+'":{x:' + point.x + ',y:' + point.y + '},\n';
-                    }
-                    $pointDisplay.text(pointString + '}');
-                });
-            });
-        </script>
-        <style>
-            #point-display {
-                height: 400px;
-            }
-            #startstop {
-                background-color: green;
-                cursor: pointer;
-            }
-        </style>
-    </body>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="LifeBoard.js"></script>
+  <script src="LifeLogic.js"></script>
+</head>
+
+<body style="margin: 0px;">
+  <canvas id="the_canvas"></canvas>
+  <div id="controls">
+    <button id="startstop">start</button>
+    <label>
+      Grid Size<input type="range" min="1" max="60" value="40" id="gridSize" name="gridSize" />
+    </label>
+  </div>
+  <script>
+    $(function () {
+      var canvas = document.getElementById('the_canvas');
+      var board = new LifeBoard(canvas);
+      board.render();
+      var go = false;
+      setInterval(function () {
+        if (go) {
+          board.advance();
+          board.render();
+        }
+      }, 10);
+      $('#startstop').click(function () {
+        go = !go;
+        $(this).text(go ? "stop" : "start");
+      });
+      $('#gridSize').on("input", function () {
+        board.squareWidth($(this).val());
+      });
+    });
+  </script>
+  <style>
+    html {
+      font-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-size: 4rem;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    #controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+
+    #point-display {
+      height: 400px;
+    }
+
+    #startstop {
+      background-color: green;
+      cursor: pointer;
+    }
+  </style>
+</body>
+
 </html>
