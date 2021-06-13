@@ -44,9 +44,9 @@ function LifeBoard(canvas, startingLogic) {
   });
   // drag stuff
   var dragStart;
-  _$canvas.mousemove(function (e) {
+  _$canvas.bind("mousemove touchmove", function (e) {
     if (dragStart) {
-      var point = { x: e.pageX, y: e.pageY };
+      var point = { x: e.pageX || e.originalEvent.touches[0].pageX, y: e.pageY || e.originalEvent.touches[0].pageY };
       convertCoord(point);
       var xDiff = point.x - dragStart.x;
       var yDiff = point.y - dragStart.y;
@@ -54,11 +54,12 @@ function LifeBoard(canvas, startingLogic) {
       dragStart = point;
     }
   });
-  _$canvas.mousedown(function (e) {
-    dragStart = { x: e.pageX, y: e.pageY };
+  _$canvas.bind("touchstart mousedown", function (e) {
+    console.log({ x: e.pageX || e.originalEvent.touches[0].pageX, y: e.pageY || e.originalEvent.touches[0].pageY });
+    dragStart = { x: e.pageX || e.originalEvent.touches[0].pageX, y: e.pageY || e.originalEvent.touches[0].pageY };
     convertCoord(dragStart);
   });
-  _$canvas.mouseup(function () {
+  _$canvas.bind("touchend mouseup", function () {
     dragStart = undefined;
   });
   // end drag stuff
