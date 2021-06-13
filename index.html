@@ -8,20 +8,22 @@
 
 <body style="margin: 0px;">
   <canvas id="the_canvas"></canvas>
-  <div id="start-stop">
-    <button id="startstop">start</button>
-  </div>
   <div id="controls">
-    <label>
-      Grid Size<input type="range" min="1" max="60" value="40" id="gridSize" name="gridSize" />
-    </label>
-    <label style="display: none">
-      Colors
-      <select>
-        <option>black</option>
-        <option>pride</option>
-      </select>
-    </label>
+    <div class="left">
+      <button id="startstop">start</button>
+    </div>
+    <div class="right">
+      <label>
+        Grid Size<input type="range" min="1" max="60" value="40" id="gridSize" name="gridSize" />
+      </label>
+      <label style="display: none">
+        Colors
+        <select>
+          <option>black</option>
+          <option>pride</option>
+        </select>
+      </label>
+    </div>
   </div>
   <script>
     $(function () {
@@ -54,6 +56,11 @@
       margin: 0;
       padding: 0;
       font-size: 4rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    button {
+      border-radius: 1rem;
     }
 
     canvas {
@@ -66,12 +73,20 @@
     }
 
     #controls {
+      display: flex;
       margin: 1rem;
       position: fixed;
       bottom: 0;
-      right: 0;
-      width: 50%;
-      text-align: right;
+      left: 0;
+      width: 100%;
+    }
+
+    #controls div.left {
+      margin-top: auto;
+    }
+
+    #controls div.right {
+      margin-left: auto;
     }
 
     #controls label {
@@ -83,19 +98,12 @@
       height: 3.2rem;
     }
 
-    #start-stop {
-      margin: 1rem;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-    }
-
     #point-display {
       height: 400px;
     }
 
     #startstop {
-      background-color: green;
+      background-color: rgb(135, 184, 135);
       cursor: pointer;
     }
   </style>
