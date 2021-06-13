@@ -14,7 +14,12 @@ function LifeBoard(canvas, startingLogic) {
 
   var _square_width = 20;
 
-  var _liveCellColor = "black";
+  var _liveCellColor = function (point) {
+    //let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+    let colors = ['black'];
+
+    return colors[(point.x + point.y) % colors.length];
+  };
   var _liveCellHoverColor = "#A30008";
   var _mouseColor = "#00A308";
 
@@ -32,7 +37,7 @@ function LifeBoard(canvas, startingLogic) {
     _self.render();
     var point = { x: e.pageX, y: e.pageY };
     convertCoord(point);
-    _ctx.fillStyle = lastPointWasAlive ? _liveCellColor : "#ffffff";
+    _ctx.fillStyle = lastPointWasAlive ? _liveCellColor(point) : "#ffffff";
     _ctx.fillRect(lastPoint.x * _square_width, lastPoint.y * _square_width, _square_width, _square_width);
     lastPoint = point;
     if (!_state.isAlive(point)) {
@@ -91,9 +96,9 @@ function LifeBoard(canvas, startingLogic) {
     _canvas.width = _canvas.width;
     drawRule();
     var points = _state.getPoints();
-    _ctx.fillStyle = _liveCellColor;
     for (var key in points) {
       var point = shiftPointForViewport(points[key]);
+      _ctx.fillStyle = _liveCellColor(point);
       _ctx.fillRect(point.x * _square_width, point.y * _square_width, _square_width, _square_width);
     }
   };
